@@ -265,3 +265,326 @@ body {
     justify-content: center;
   }
 }
+
+/* ============================================================
+   FASE 2 — Catálogo de equipos (vista_usuario)
+   ============================================================ */
+
+/* ─── Encabezado de sección ───────────────────────────────── */
+.catalogo-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalogo-header h2 {
+  font-family: var(--fuente-display);
+  font-size: 1.4rem;
+  color: var(--azul-oscuro);
+  line-height: 1.2;
+}
+
+.catalogo-header p {
+  font-size: 0.8rem;
+  color: var(--gris-medio);
+  margin-top: 0.2rem;
+}
+
+/* Contador de equipos disponibles */
+.disponibles-count {
+  background: linear-gradient(135deg, var(--verde), #3aaa6e);
+  color: var(--blanco);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ─── Grid de equipos ─────────────────────────────────────── */
+.equipos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.3rem;
+}
+
+/* ─── Tarjeta de equipo ───────────────────────────────────── */
+.equipo-card {
+  background: var(--blanco);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(10, 36, 99, 0.07);
+  border: 1.5px solid var(--gris-claro);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion);
+  animation: aparecer 0.4s ease both;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Retraso escalonado para las primeras 12 tarjetas */
+.equipo-card:nth-child(1)  { animation-delay: 0.04s; }
+.equipo-card:nth-child(2)  { animation-delay: 0.08s; }
+.equipo-card:nth-child(3)  { animation-delay: 0.12s; }
+.equipo-card:nth-child(4)  { animation-delay: 0.16s; }
+.equipo-card:nth-child(5)  { animation-delay: 0.20s; }
+.equipo-card:nth-child(6)  { animation-delay: 0.24s; }
+.equipo-card:nth-child(7)  { animation-delay: 0.28s; }
+.equipo-card:nth-child(8)  { animation-delay: 0.32s; }
+
+.equipo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(10, 36, 99, 0.12);
+  border-color: var(--azul-claro);
+}
+
+.equipo-card--no-disponible {
+  opacity: 0.72;
+}
+
+.equipo-card--no-disponible:hover {
+  transform: none;
+  box-shadow: 0 2px 10px rgba(10, 36, 99, 0.07);
+  border-color: var(--gris-claro);
+}
+
+/* Franja superior de color según estado */
+.equipo-card-top {
+  height: 5px;
+  flex-shrink: 0;
+}
+
+.equipo-card-top--disponible   { background: var(--verde); }
+.equipo-card-top--solicitado   { background: #D97706; }
+.equipo-card-top--prestado     { background: var(--error); }
+.equipo-card-top--mantenimiento{ background: var(--gris-medio); }
+
+/* Cuerpo de la tarjeta */
+.equipo-card-body {
+  padding: 1.2rem 1.3rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.equipo-card-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.equipo-emoji {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ─── Badge de estado ─────────────────────────────────────── */
+.estado-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.estado-badge--disponible {
+  background: rgba(46, 139, 87, 0.12);
+  color: #1a6b3e;
+  border: 1px solid rgba(46, 139, 87, 0.3);
+}
+
+.estado-badge--solicitado {
+  background: rgba(217, 119, 6, 0.12);
+  color: #92400e;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+.estado-badge--prestado {
+  background: rgba(229, 62, 62, 0.10);
+  color: #9b1c1c;
+  border: 1px solid rgba(229, 62, 62, 0.25);
+}
+
+.estado-badge--mantenimiento {
+  background: rgba(138, 149, 168, 0.15);
+  color: #4a5568;
+  border: 1px solid rgba(138, 149, 168, 0.3);
+}
+
+/* Info del equipo */
+.equipo-nombre {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--texto-oscuro);
+  line-height: 1.3;
+}
+
+.equipo-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.equipo-categoria {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--azul-medio);
+  background: rgba(27, 79, 138, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.equipo-serie {
+  font-size: 0.7rem;
+  color: var(--gris-medio);
+  font-family: 'Courier New', monospace;
+}
+
+.equipo-desc {
+  font-size: 0.78rem;
+  color: var(--texto-medio);
+  line-height: 1.5;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Pie de la tarjeta */
+.equipo-card-footer {
+  padding: 0 1.3rem 1.2rem;
+}
+
+/* ─── Botones de acción ───────────────────────────────────── */
+.btn-solicitar {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+  color: var(--blanco);
+  border: none;
+  border-radius: var(--radio-sm);
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all var(--transicion);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.btn-solicitar:hover {
+  background: linear-gradient(135deg, var(--verde), #3aaa6e);
+  box-shadow: 0 4px 14px rgba(46, 139, 87, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-solicitar:active {
+  transform: translateY(0);
+}
+
+.btn-no-disponible {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: var(--off-white);
+  color: var(--gris-medio);
+  border: 1.5px solid var(--gris-claro);
+  border-radius: var(--radio-sm);
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+/* ─── Estado vacío ────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gris-medio);
+}
+
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-state p { font-size: 0.9rem; }
+
+/* ─── Toast de confirmación ───────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 1.8rem;
+  right: 1.8rem;
+  background: var(--azul-oscuro);
+  color: var(--blanco);
+  border-left: 4px solid var(--verde);
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  box-shadow: 0 8px 30px rgba(10, 36, 99, 0.3);
+  max-width: 340px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  z-index: 999;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity  0.35s ease;
+  pointer-events: none;
+}
+
+.toast.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+
+.toast-body .toast-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.toast-body .toast-msg {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+}
+
+/* ─── Responsive Fase 2 ───────────────────────────────────── */
+@media (max-width: 600px) {
+  .equipos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogo-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toast {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    max-width: none;
+  }
+}

@@ -5,107 +5,225 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Portal | UAS — Préstamo de Equipos</title>
 
-  <!-- Fuentes Google (preconnect completo, igual que index.html) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
 
-  <!-- Hojas de estilo -->
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
 
+  <!-- ═══════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════ -->
   <nav class="topbar topbar--usuario">
     <div class="topbar-brand">
-      <div class="escudo">🎓</div>
-      <span>UAS · Préstamo de Equipos</span>
+      <div class="escudo" aria-hidden="true">🎓</div>
+      <div>
+        <div style="font-size:0.88rem;font-weight:700;letter-spacing:0.02em;">
+          Facultad de Ingeniería Mochis
+        </div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.65);font-weight:400;">
+          UAS · Sistema de Préstamo de Equipos
+        </div>
+      </div>
     </div>
+
     <div class="topbar-right">
       <div class="usuario-info">
         <div class="nombre" id="nav-nombre">Cargando...</div>
-        <div class="tipo"   id="nav-tipo">—</div>
+        <div class="tipo"   id="nav-detalle">—</div>
       </div>
       <button class="btn-salir" onclick="cerrarSesion()">Cerrar sesión</button>
     </div>
   </nav>
 
+  <!-- ═══════════════════════════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ════════════════════════════════════════════════════════ -->
   <main class="main">
 
-    <!-- Tarjeta de perfil -->
-    <div class="perfil-card">
-      <div class="perfil-avatar" id="avatar-icono">🎒</div>
-      <div class="perfil-datos">
-        <h2 id="perfil-nombre">—</h2>
-        <p  id="perfil-unidad">—</p>
-        <div class="perfil-badges">
-          <span class="badge" id="badge-tipo">—</span>
-          <span class="badge" id="badge-carrera" style="display:none">—</span>
-          <span class="badge" id="badge-grupo"   style="display:none">—</span>
-        </div>
+    <!-- Encabezado del catálogo -->
+    <div class="catalogo-header">
+      <div>
+        <h2>Catálogo de Equipos</h2>
+        <p>Selecciona un equipo disponible para solicitar su préstamo.</p>
       </div>
+      <span class="disponibles-count" id="count-disponibles">— disponibles</span>
     </div>
 
-    <!-- Módulos de acción -->
-    <div class="modulos-grid">
-      <div class="modulo-card modulo-card--usuario">
-        <div class="icono">🔍</div>
-        <h3>Ver Equipos</h3>
-        <p>Consultar disponibilidad</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
-      <div class="modulo-card modulo-card--usuario">
-        <div class="icono">📝</div>
-        <h3>Solicitar Préstamo</h3>
-        <p>Pedir equipo disponible</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
-      <div class="modulo-card modulo-card--usuario">
-        <div class="icono">📦</div>
-        <h3>Mis Préstamos</h3>
-        <p>Ver historial y activos</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
-      <div class="modulo-card modulo-card--usuario">
-        <div class="icono">🔔</div>
-        <h3>Notificaciones</h3>
-        <p>Avisos y recordatorios</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
+    <!-- Grid de tarjetas (se renderiza desde JS) -->
+    <div class="equipos-grid" id="equipos-grid" role="list">
+      <!-- Las tarjetas se inyectan dinámicamente -->
     </div>
 
   </main>
 
+  <!-- ═══════════════════════════════════════════════════════
+       TOAST DE CONFIRMACIÓN
+  ════════════════════════════════════════════════════════ -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="toast-icon">✅</span>
+    <div class="toast-body">
+      <div class="toast-title">Solicitud enviada</div>
+      <div class="toast-msg">
+        Solicitud enviada. Por favor, pasa con el encargado para recoger tu equipo.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════════════════════ -->
   <script src="js/database.js"></script>
   <script>
-    (function() {
-      const sesion = JSON.parse(sessionStorage.getItem('uas_session') || 'null');
+    /* ─── Sesión activa ─────────────────────────────────── */
+    let sesion = null;
+
+    (function verificarSesion() {
+      try {
+        sesion = JSON.parse(sessionStorage.getItem('uas_session') || 'null');
+      } catch { sesion = null; }
+
       if (!sesion || sesion.tipo === 'Empleado') {
         window.location.href = 'index.html';
         return;
       }
 
+      // Poblar navbar
       const esMaestro = sesion.tipo === 'Maestro';
+      document.getElementById('nav-nombre').textContent = sesion.nombre;
 
-      document.getElementById('nav-nombre').textContent    = sesion.nombre;
-      document.getElementById('nav-tipo').textContent      = `${sesion.tipo} · ${sesion.unidad || 'UAS'}`;
-      document.getElementById('perfil-nombre').textContent = sesion.nombre;
-      document.getElementById('perfil-unidad').textContent = sesion.unidad || 'UAS';
-      document.getElementById('badge-tipo').textContent    = sesion.tipo;
-      document.getElementById('avatar-icono').textContent  = esMaestro ? '👨‍🏫' : '🎒';
+      const partes = [sesion.tipo];
+      if (sesion.carrera) partes.push(sesion.carrera);
+      if (sesion.grupo)   partes.push(`Grupo ${sesion.grupo}`);
+      document.getElementById('nav-detalle').textContent = partes.join(' · ');
 
-      if (sesion.carrera) {
-        const bc = document.getElementById('badge-carrera');
-        bc.textContent    = sesion.carrera;
-        bc.style.display  = 'inline-block';
-      }
-      if (sesion.grupo) {
-        const bg = document.getElementById('badge-grupo');
-        bg.textContent   = `Grupo ${sesion.grupo}`;
-        bg.style.display = 'inline-block';
-      }
+      // Renderizar catálogo
+      renderCatalogo();
     })();
 
+    /* ─── Render de tarjetas ────────────────────────────── */
+    function renderCatalogo() {
+      const grid      = document.getElementById('equipos-grid');
+      const equipos   = DB.getEquipos();
+      const contador  = document.getElementById('count-disponibles');
+
+      const disponibles = equipos.filter(e => e.estado === 'Disponible').length;
+      contador.textContent = `${disponibles} disponible${disponibles !== 1 ? 's' : ''}`;
+
+      if (equipos.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1">
+            <div class="empty-icon">📦</div>
+            <p>No hay equipos registrados en el sistema.</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = equipos.map(equipo => crearTarjeta(equipo)).join('');
+    }
+
+    /* ─── Construcción de una tarjeta ───────────────────── */
+    function crearTarjeta(equipo) {
+      const disponible = equipo.estado === 'Disponible';
+
+      /* Clase y texto del badge según estado */
+      const badgeClase = {
+        'Disponible':    'estado-badge--disponible',
+        'Solicitado':    'estado-badge--solicitado',
+        'Prestado':      'estado-badge--prestado',
+        'Mantenimiento': 'estado-badge--mantenimiento',
+      }[equipo.estado] || 'estado-badge--mantenimiento';
+
+      const topClase = {
+        'Disponible':    'equipo-card-top--disponible',
+        'Solicitado':    'equipo-card-top--solicitado',
+        'Prestado':      'equipo-card-top--prestado',
+        'Mantenimiento': 'equipo-card-top--mantenimiento',
+      }[equipo.estado] || 'equipo-card-top--mantenimiento';
+
+      /* Botón de acción dinámico */
+      const boton = disponible
+        ? `<button
+             class="btn-solicitar"
+             onclick="solicitarPrestamo('${equipo.id}')"
+             aria-label="Solicitar préstamo de ${equipo.nombre}">
+             📋 Solicitar Préstamo
+           </button>`
+        : `<button class="btn-no-disponible" disabled aria-disabled="true">
+             🚫 No Disponible
+           </button>`;
+
+      return `
+        <div class="equipo-card ${disponible ? '' : 'equipo-card--no-disponible'}"
+             role="listitem">
+          <div class="equipo-card-top ${topClase}"></div>
+          <div class="equipo-card-body">
+            <div class="equipo-card-top-row">
+              <span class="equipo-emoji" aria-hidden="true">${equipo.imagen || '💻'}</span>
+              <span class="estado-badge ${badgeClase}">${equipo.estado}</span>
+            </div>
+            <div class="equipo-nombre">${equipo.nombre}</div>
+            <div class="equipo-meta">
+              <span class="equipo-categoria">${equipo.categoria}</span>
+              <span class="equipo-serie">N/S: ${equipo.numeroSerie}</span>
+            </div>
+            <p class="equipo-desc">${equipo.descripcion}</p>
+          </div>
+          <div class="equipo-card-footer">
+            ${boton}
+          </div>
+        </div>`;
+    }
+
+    /* ─── Lógica de solicitud ───────────────────────────── */
+    function solicitarPrestamo(equipoId) {
+      const equipos = DB.getEquipos();
+      const idx     = equipos.findIndex(e => e.id === equipoId);
+
+      if (idx === -1 || equipos[idx].estado !== 'Disponible') return;
+
+      /* 1. Cambiar estado del equipo a "Solicitado" */
+      equipos[idx].estado = 'Solicitado';
+      DB.saveEquipos(equipos);
+
+      /* 2. Crear registro en préstamos */
+      const prestamos = DB.getPrestamos();
+      const nuevoPrestamo = {
+        id:         'p' + Date.now(),
+        usuarioId:  sesion.userId,
+        usuario:    sesion.nombre,
+        equipoId:   equipoId,
+        equipo:     equipos[idx].nombre,
+        fechaSolicitud: new Date().toISOString(),
+        estado:     'Pendiente',   // Requiere aprobación del empleado
+      };
+      prestamos.push(nuevoPrestamo);
+      DB.savePrestamos(prestamos);
+
+      /* 3. Re-renderizar catálogo */
+      renderCatalogo();
+
+      /* 4. Mostrar toast de confirmación */
+      mostrarToast();
+    }
+
+    /* ─── Toast ─────────────────────────────────────────── */
+    let toastTimer = null;
+
+    function mostrarToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('visible');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 4500);
+    }
+
+    /* ─── Cerrar sesión ─────────────────────────────────── */
     function cerrarSesion() {
       sessionStorage.removeItem('uas_session');
       window.location.href = 'index.html';
