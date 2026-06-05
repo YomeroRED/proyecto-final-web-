@@ -1,0 +1,267 @@
+/* ============================================================
+   DASHBOARD.CSS — Estilos compartidos de los dashboards
+   Sistema de Préstamo de Equipos | UAS FIM
+   ============================================================ */
+
+/* ─── Fondo base ──────────────────────────────────────────── */
+body {
+  background: var(--off-white);
+}
+
+/* ─── Barra de navegación superior ───────────────────────── */
+.topbar {
+  color: var(--blanco);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(10, 36, 99, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Variante azul — Empleado */
+.topbar--empleado {
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+}
+
+/* Variante verde — Alumno / Maestro */
+.topbar--usuario {
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--verde));
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbar-brand .escudo {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--dorado), var(--dorado-suave));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.topbar-brand span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.usuario-info {
+  text-align: right;
+}
+
+.usuario-info .nombre {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.usuario-info .tipo {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.btn-salir {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--blanco);
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-family: var(--fuente-ui);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transicion);
+}
+
+.btn-salir:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Área principal ──────────────────────────────────────── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ─── Tarjeta de bienvenida (Empleado) ────────────────────── */
+.bienvenida {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(10, 36, 99, 0.08);
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--dorado);
+}
+
+.bienvenida h1 {
+  font-family: var(--fuente-display);
+  font-size: 1.5rem;
+  color: var(--azul-oscuro);
+  margin-bottom: 0.4rem;
+}
+
+.bienvenida p {
+  color: var(--gris-medio);
+  font-size: 0.88rem;
+}
+
+/* ─── Tarjeta de perfil (Alumno / Maestro) ────────────────── */
+.perfil-card {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 4px 16px rgba(10, 36, 99, 0.08);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-left: 4px solid var(--verde);
+}
+
+.perfil-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--azul-medio), var(--azul-oscuro));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.perfil-datos h2 {
+  font-family: var(--fuente-display);
+  font-size: 1.25rem;
+  color: var(--azul-oscuro);
+}
+
+.perfil-datos p {
+  font-size: 0.8rem;
+  color: var(--gris-medio);
+  margin-top: 0.2rem;
+}
+
+.perfil-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: var(--off-white);
+  border: 1px solid var(--gris-claro);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--azul-medio);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ─── Grid de módulos ─────────────────────────────────────── */
+.modulos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
+
+.modulo-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(10, 36, 99, 0.07);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all var(--transicion);
+  text-align: center;
+}
+
+.modulo-card .icono {
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+.modulo-card h3 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--azul-oscuro);
+  margin-bottom: 0.25rem;
+}
+
+.modulo-card p {
+  font-size: 0.72rem;
+  color: var(--gris-medio);
+}
+
+/* Variante hover azul — Empleado */
+.modulo-card--empleado:hover {
+  border-color: var(--azul-medio);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(10, 36, 99, 0.12);
+}
+
+/* Variante hover verde — Alumno / Maestro */
+.modulo-card--usuario:hover {
+  border-color: var(--verde);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 139, 87, 0.12);
+}
+
+/* ─── Badge de fase pendiente ─────────────────────────────── */
+.badge-fase2 {
+  display: inline-block;
+  background: #EDF2F7;
+  color: var(--gris-medio);
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .topbar {
+    padding: 0 1rem;
+    height: auto;
+    min-height: 64px;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .main {
+    padding: 1.2rem 1rem;
+  }
+
+  .modulos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .perfil-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .perfil-badges {
+    justify-content: center;
+  }
+}

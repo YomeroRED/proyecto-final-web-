@@ -1,0 +1,73 @@
+/* ============================================================
+   BASE.CSS — Variables globales y reset
+   Sistema de Préstamo de Equipos | UAS FIM
+   ============================================================
+   Colores institucionales UAS:
+     Azul marino principal : #0A2463
+     Azul medio            : #1B4F8A
+     Dorado UAS            : #C9A84C
+     Verde esmeralda       : #2E8B57
+     Blanco / Off-white    : #F8F9FC
+     Texto oscuro          : #1A1E2E
+   ============================================================ */
+
+/* ─── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Variables globales ──────────────────────────────────── */
+:root {
+  /* Paleta */
+  --azul-oscuro:   #0A2463;
+  --azul-medio:    #1B4F8A;
+  --azul-claro:    #2D72B8;
+  --dorado:        #C9A84C;
+  --dorado-suave:  #E8CC7A;
+  --verde:         #2E8B57;
+  --blanco:        #FFFFFF;
+  --off-white:     #F4F6FB;
+  --gris-claro:    #E2E8F0;
+  --gris-medio:    #8A95A8;
+  --texto-oscuro:  #1A1E2E;
+  --texto-medio:   #4A5568;
+  --error:         #E53E3E;
+  --error-bg:      #FFF5F5;
+
+  /* Sombras */
+  --sombra-card:   0 24px 60px rgba(10, 36, 99, 0.18),
+                   0  8px 20px rgba(10, 36, 99, 0.10);
+
+  /* Bordes */
+  --radio:         20px;   /* Radio grande — tarjeta principal */
+  --radio-sm:       8px;   /* Radio pequeño — inputs, botones  */
+
+  /* Transición estándar */
+  --transicion:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fuentes (cargadas vía <link> en el HTML) */
+  --fuente-display: 'Playfair Display', 'Georgia', serif;
+  --fuente-ui:      'DM Sans', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ─── Base HTML / body ────────────────────────────────────── */
+html {
+  height: 100%;
+}
+
+body {
+  font-family: var(--fuente-ui);
+  color: var(--texto-oscuro);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Accesibilidad: reducir movimiento ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

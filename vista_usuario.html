@@ -4,92 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Portal | UAS — Préstamo de Equipos</title>
+
+  <!-- Fuentes Google (preconnect completo, igual que index.html) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --azul-oscuro: #0A2463;
-      --azul-medio:  #1B4F8A;
-      --verde:       #2E8B57;
-      --dorado:      #C9A84C;
-      --blanco:      #FFFFFF;
-      --off-white:   #F4F6FB;
-      --gris-medio:  #8A95A8;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--off-white); min-height: 100vh; }
 
-    .topbar {
-      background: linear-gradient(135deg, var(--azul-oscuro), var(--verde));
-      color: white; padding: 0 2rem; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 2px 12px rgba(10,36,99,0.2);
-    }
-    .topbar-brand { display: flex; align-items: center; gap: 0.75rem; }
-    .topbar-brand .escudo {
-      width: 38px; height: 38px;
-      background: linear-gradient(135deg, var(--dorado), #E8CC7A);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-    }
-    .topbar-brand span { font-size: 0.88rem; font-weight: 600; }
-    .topbar-right { display: flex; align-items: center; gap: 1rem; }
-    .usuario-info .nombre { font-size: 0.85rem; font-weight: 600; text-align: right; }
-    .usuario-info .tipo   { font-size: 0.7rem; color: rgba(255,255,255,0.65); text-align: right; }
-    .btn-salir {
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-      color: white; padding: 0.4rem 0.9rem; border-radius: 6px;
-      font-family: inherit; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: background 0.2s;
-    }
-    .btn-salir:hover { background: rgba(255,255,255,0.25); }
-
-    .main { max-width: 900px; margin: 0 auto; padding: 2rem; }
-
-    .perfil-card {
-      background: white; border-radius: 14px; padding: 1.8rem 2rem;
-      box-shadow: 0 4px 16px rgba(10,36,99,0.08); margin-bottom: 1.5rem;
-      display: flex; align-items: center; gap: 1.5rem;
-      border-left: 4px solid var(--verde);
-    }
-    .perfil-avatar {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--azul-medio), var(--azul-oscuro));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; flex-shrink: 0;
-    }
-    .perfil-datos h2 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--azul-oscuro); }
-    .perfil-datos p  { font-size: 0.8rem; color: var(--gris-medio); margin-top: 0.2rem; }
-    .perfil-badges   { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
-    .badge {
-      background: var(--off-white); border: 1px solid #E2E8F0;
-      font-size: 0.7rem; font-weight: 600; color: var(--azul-medio);
-      padding: 3px 10px; border-radius: 20px;
-    }
-
-    .modulos-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1.1rem;
-    }
-    .modulo-card {
-      background: white; border-radius: 12px; padding: 1.4rem;
-      box-shadow: 0 2px 8px rgba(10,36,99,0.07);
-      border: 1.5px solid transparent; cursor: pointer;
-      transition: all 0.2s; text-align: center;
-    }
-    .modulo-card:hover {
-      border-color: var(--verde); transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(46,139,87,0.12);
-    }
-    .modulo-card .icono { font-size: 1.8rem; margin-bottom: 0.5rem; }
-    .modulo-card h3 { font-size: 0.86rem; font-weight: 600; color: var(--azul-oscuro); margin-bottom: 0.2rem; }
-    .modulo-card p  { font-size: 0.72rem; color: var(--gris-medio); }
-    .badge-fase2 {
-      display: inline-block; background: #EDF2F7; color: var(--gris-medio);
-      font-size: 0.65rem; padding: 2px 7px; border-radius: 10px; margin-top: 0.4rem; font-weight: 500;
-    }
-  </style>
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
 
-  <nav class="topbar">
+  <nav class="topbar topbar--usuario">
     <div class="topbar-brand">
       <div class="escudo">🎓</div>
       <span>UAS · Préstamo de Equipos</span>
@@ -104,6 +31,7 @@
   </nav>
 
   <main class="main">
+
     <!-- Tarjeta de perfil -->
     <div class="perfil-card">
       <div class="perfil-avatar" id="avatar-icono">🎒</div>
@@ -120,34 +48,35 @@
 
     <!-- Módulos de acción -->
     <div class="modulos-grid">
-      <div class="modulo-card">
+      <div class="modulo-card modulo-card--usuario">
         <div class="icono">🔍</div>
         <h3>Ver Equipos</h3>
         <p>Consultar disponibilidad</p>
         <span class="badge-fase2">Fase 2</span>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card modulo-card--usuario">
         <div class="icono">📝</div>
         <h3>Solicitar Préstamo</h3>
         <p>Pedir equipo disponible</p>
         <span class="badge-fase2">Fase 2</span>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card modulo-card--usuario">
         <div class="icono">📦</div>
         <h3>Mis Préstamos</h3>
         <p>Ver historial y activos</p>
         <span class="badge-fase2">Fase 2</span>
       </div>
-      <div class="modulo-card">
+      <div class="modulo-card modulo-card--usuario">
         <div class="icono">🔔</div>
         <h3>Notificaciones</h3>
         <p>Avisos y recordatorios</p>
         <span class="badge-fase2">Fase 2</span>
       </div>
     </div>
+
   </main>
 
-  <script src="database.js"></script>
+  <script src="js/database.js"></script>
   <script>
     (function() {
       const sesion = JSON.parse(sessionStorage.getItem('uas_session') || 'null');
@@ -158,21 +87,21 @@
 
       const esMaestro = sesion.tipo === 'Maestro';
 
-      document.getElementById('nav-nombre').textContent   = sesion.nombre;
-      document.getElementById('nav-tipo').textContent     = `${sesion.tipo} · ${sesion.unidad || 'UAS'}`;
+      document.getElementById('nav-nombre').textContent    = sesion.nombre;
+      document.getElementById('nav-tipo').textContent      = `${sesion.tipo} · ${sesion.unidad || 'UAS'}`;
       document.getElementById('perfil-nombre').textContent = sesion.nombre;
       document.getElementById('perfil-unidad').textContent = sesion.unidad || 'UAS';
-      document.getElementById('badge-tipo').textContent   = sesion.tipo;
+      document.getElementById('badge-tipo').textContent    = sesion.tipo;
       document.getElementById('avatar-icono').textContent  = esMaestro ? '👨‍🏫' : '🎒';
 
       if (sesion.carrera) {
         const bc = document.getElementById('badge-carrera');
-        bc.textContent = sesion.carrera;
-        bc.style.display = 'inline-block';
+        bc.textContent    = sesion.carrera;
+        bc.style.display  = 'inline-block';
       }
       if (sesion.grupo) {
         const bg = document.getElementById('badge-grupo');
-        bg.textContent = `Grupo ${sesion.grupo}`;
+        bg.textContent   = `Grupo ${sesion.grupo}`;
         bg.style.display = 'inline-block';
       }
     })();
@@ -182,5 +111,6 @@
       window.location.href = 'index.html';
     }
   </script>
+
 </body>
 </html>

@@ -6,12 +6,14 @@
   <meta name="description" content="Sistema de Préstamo de Equipos — Facultad de Ingeniería Mochis, UAS" />
   <title>Acceso al Sistema | UAS — Préstamo de Equipos</title>
 
-  <!-- Fuentes Google -->
+  <!-- Fuentes Google (cargadas aquí una sola vez; eliminado el @import duplicado en CSS) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/login.css" />
 </head>
 <body>
 
@@ -63,7 +65,6 @@
         <label for="input-usuario" id="label-usuario">Usuario</label>
         <div class="input-wrapper">
           <span class="input-icono" aria-hidden="true">
-            <!-- Ícono persona -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round">
@@ -89,7 +90,6 @@
         <label for="input-password">Contraseña</label>
         <div class="input-wrapper">
           <span class="input-icono" aria-hidden="true">
-            <!-- Ícono candado -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round">
@@ -106,14 +106,12 @@
             autocomplete="current-password"
             aria-required="true"
             aria-describedby="error-msg" />
-          <!-- Botón mostrar/ocultar -->
           <button
             type="button"
             id="btn-show-pass"
             class="btn-show-pass"
             aria-label="Mostrar contraseña"
             title="Mostrar / ocultar contraseña">
-            <!-- Ícono ojo -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round">
@@ -161,11 +159,8 @@
 
   </div><!-- /login-card -->
 
-  <!-- ════════════════════════════════════════════════════════
-       SCRIPTS  (orden importante: DB → AUTH)
-  ═════════════════════════════════════════════════════════ -->
-  <script src="database.js"></script>
-  <script src="auth.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
 
 </body>
 </html>
