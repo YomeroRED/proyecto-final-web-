@@ -1105,3 +1105,364 @@
   .tabla-wrapper { overflow-x: auto; }
   .crud-table    { min-width: 560px; }
 }
+
+
+/* ============================================================
+   MÓDULO DE REPORTES — Tab 4
+   ============================================================ */
+
+/* ─── Panel de Filtros ─────────────────────────────────────── */
+.rep-filtros-panel {
+  background: var(--blanco);
+  border: 1.5px solid var(--gris-claro);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.rep-filtros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.85rem 1rem;
+  align-items: end;
+}
+
+.rep-filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rep-filtro-grupo--accion {
+  justify-content: flex-end;
+}
+
+.rep-filtro-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--texto-medio);
+}
+
+.rep-filtro-input {
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  color: var(--texto-oscuro);
+  background: var(--off-white);
+  border: 1.5px solid var(--gris-claro);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  transition: border-color var(--transicion);
+  appearance: auto;
+}
+
+.rep-filtro-input:focus {
+  outline: none;
+  border-color: var(--azul-claro);
+  background: var(--blanco);
+}
+
+.rep-btn-limpiar {
+  font-family: var(--fuente-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gris-medio);
+  background: transparent;
+  border: 1.5px solid var(--gris-claro);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all var(--transicion);
+  white-space: nowrap;
+}
+
+.rep-btn-limpiar:hover {
+  background: var(--error-bg);
+  border-color: var(--error);
+  color: var(--error);
+}
+
+/* ─── Botón Imprimir ──────────────────────────────────────── */
+.rep-btn-imprimir {
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--blanco);
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  box-shadow: 0 4px 14px rgba(10, 36, 99, 0.22);
+  transition: all var(--transicion);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rep-btn-imprimir:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(10, 36, 99, 0.32);
+}
+
+/* ─── Área de resultados ──────────────────────────────────── */
+.rep-resultados-area {
+  background: var(--blanco);
+  border: 1.5px solid var(--gris-claro);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.rep-resultados-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--gris-claro);
+  background: var(--off-white);
+}
+
+.rep-contador {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--azul-medio);
+  letter-spacing: 0.01em;
+}
+
+/* ─── Tabla de Reportes ───────────────────────────────────── */
+.rep-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.81rem;
+}
+
+.rep-tabla thead {
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+  color: var(--blanco);
+}
+
+.rep-tabla thead th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rep-tabla tbody tr {
+  border-bottom: 1px solid var(--gris-claro);
+  transition: background var(--transicion);
+}
+
+.rep-tabla tbody tr:last-child { border-bottom: none; }
+
+.rep-tabla tbody tr:hover { background: rgba(10, 36, 99, 0.025); }
+
+.rep-tabla tbody td {
+  padding: 0.8rem 1rem;
+  color: var(--texto-oscuro);
+  vertical-align: middle;
+}
+
+.rep-td-fecha {
+  white-space: nowrap;
+  font-size: 0.77rem;
+  color: var(--gris-medio) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.rep-td-equipo {
+  font-weight: 500;
+}
+
+/* ─── Badges de Tipo ──────────────────────────────────────── */
+.rep-tipo-badge {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rep-tipo-alumno {
+  background: rgba(45, 114, 184, 0.12);
+  color: var(--azul-claro);
+}
+
+.rep-tipo-maestro {
+  background: rgba(201, 168, 76, 0.15);
+  color: #8a6800;
+}
+
+.rep-tipo-empleado {
+  background: rgba(46, 139, 87, 0.12);
+  color: var(--verde);
+}
+
+/* ─── Badges de Estado ────────────────────────────────────── */
+.rep-estado-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.rep-estado--devuelto {
+  background: rgba(46, 139, 87, 0.12);
+  color: var(--verde);
+}
+
+.rep-estado--activo {
+  background: rgba(45, 114, 184, 0.12);
+  color: var(--azul-claro);
+}
+
+.rep-estado--pendiente {
+  background: rgba(201, 168, 76, 0.18);
+  color: #7a5f00;
+}
+
+.rep-estado--rechazado {
+  background: rgba(229, 62, 62, 0.1);
+  color: var(--error);
+}
+
+/* ─── Estado vacío ────────────────────────────────────────── */
+.rep-empty {
+  text-align: center;
+  padding: 3.5rem 2rem;
+  color: var(--gris-medio);
+}
+
+.rep-empty-icon {
+  font-size: 2.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.rep-empty p {
+  font-size: 0.85rem;
+}
+
+/* ─── Control de visibilidad screen/print ─────────────────── */
+.rep-print-only  { display: none; }
+.rep-screen-only { display: block; }
+
+/* ─── Encabezado de impresión ─────────────────────────────── */
+.rep-print-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #0A2463;
+  margin-bottom: 1rem;
+}
+
+.rep-print-logo  { font-size: 2.5rem; }
+
+.rep-print-titulo h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0A2463;
+}
+
+.rep-print-titulo p {
+  font-size: 0.82rem;
+  color: #555;
+}
+
+.rep-print-titulo small {
+  font-size: 0.72rem;
+  color: #888;
+}
+
+.rep-print-contador {
+  font-size: 0.75rem;
+  color: #555;
+  margin-bottom: 0.6rem;
+}
+
+/* ============================================================
+   @MEDIA PRINT — Sólo la tabla de reportes
+   ============================================================ */
+@media print {
+
+  /* Mostrar/ocultar según contexto */
+  .rep-screen-only { display: none !important; }
+  .rep-print-only  { display: block !important; }
+
+  /* Ocultar todo el chrome del dashboard */
+  .topbar,
+  .emp-sidebar,
+  .emp-tab:not(#tab-reportes),
+  .emp-tab#tab-reportes .rep-filtros-panel,
+  .rep-resultados-header,
+  .modal-overlay,
+  .toast { display: none !important; }
+
+  /* Expandir el área de contenido */
+  body, html { background: #fff !important; }
+
+  .emp-layout { display: block !important; }
+  .emp-main   { padding: 0 !important; margin: 0 !important; }
+
+  #tab-reportes {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Tabla para papel */
+  .rep-tabla {
+    font-size: 10pt;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .rep-tabla thead {
+    background: #0A2463 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rep-tabla thead th {
+    color: #fff !important;
+    font-size: 8pt;
+    padding: 6pt 8pt;
+  }
+
+  .rep-tabla tbody td {
+    padding: 5pt 8pt;
+    font-size: 9pt;
+    border-bottom: 0.5pt solid #ddd;
+  }
+
+  .rep-estado-badge,
+  .rep-tipo-badge {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rep-resultados-area {
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Sin sombras ni bordes decorativos */
+  * { box-shadow: none !important; }
+
+  @page {
+    margin: 1.5cm;
+    size: A4 landscape;
+  }
+}

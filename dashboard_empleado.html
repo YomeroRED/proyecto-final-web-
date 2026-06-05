@@ -185,20 +185,92 @@
 
       <!-- ── TAB 4: Reportes ───────────────────────────────── -->
       <section class="emp-tab" id="tab-reportes">
-        <div class="emp-section-header">
+
+        <!-- Encabezado visible en pantalla (se oculta al imprimir) -->
+        <div class="emp-section-header rep-screen-only">
           <div>
             <h1 class="emp-section-title">Reportes</h1>
-            <p class="emp-section-subtitle">Estadísticas, historial y reportes del sistema</p>
+            <p class="emp-section-subtitle">Historial completo de préstamos con filtros avanzados</p>
+          </div>
+          <button class="rep-btn-imprimir" onclick="Reportes.imprimirReporte()" title="Imprimir reporte">
+            🖨️ Imprimir Reporte
+          </button>
+        </div>
+
+        <!-- ── Panel de Filtros (se oculta al imprimir) ──────── -->
+        <div class="rep-filtros-panel rep-screen-only">
+          <div class="rep-filtros-grid">
+
+            <!-- Fecha Desde -->
+            <div class="rep-filtro-grupo">
+              <label class="rep-filtro-label" for="rep-filtro-desde">Desde</label>
+              <input type="date" id="rep-filtro-desde" class="rep-filtro-input" />
+            </div>
+
+            <!-- Fecha Hasta -->
+            <div class="rep-filtro-grupo">
+              <label class="rep-filtro-label" for="rep-filtro-hasta">Hasta</label>
+              <input type="date" id="rep-filtro-hasta" class="rep-filtro-input" />
+            </div>
+
+            <!-- Por Carrera -->
+            <div class="rep-filtro-grupo">
+              <label class="rep-filtro-label" for="rep-filtro-carrera">Carrera</label>
+              <select id="rep-filtro-carrera" class="rep-filtro-input">
+                <option value="">Todas las carreras</option>
+              </select>
+            </div>
+
+            <!-- Por Equipo -->
+            <div class="rep-filtro-grupo">
+              <label class="rep-filtro-label" for="rep-filtro-equipo">Equipo</label>
+              <select id="rep-filtro-equipo" class="rep-filtro-input">
+                <option value="">Todos los equipos</option>
+              </select>
+            </div>
+
+            <!-- Por Tipo de Usuario -->
+            <div class="rep-filtro-grupo">
+              <label class="rep-filtro-label" for="rep-filtro-tipo">Tipo de Usuario</label>
+              <select id="rep-filtro-tipo" class="rep-filtro-input">
+                <option value="">Todos</option>
+                <option value="Alumno">Alumno</option>
+                <option value="Maestro">Maestro</option>
+              </select>
+            </div>
+
+            <!-- Botón limpiar -->
+            <div class="rep-filtro-grupo rep-filtro-grupo--accion">
+              <button class="rep-btn-limpiar" onclick="Reportes.limpiarFiltros()">
+                ✕ Limpiar Filtros
+              </button>
+            </div>
+
           </div>
         </div>
-        <div class="emp-coming-soon">
-          <div class="coming-icon">📈</div>
-          <h3>Módulo en desarrollo</h3>
-          <p>Aquí se mostrarán gráficas de uso, historial completo de préstamos y reportes exportables.</p>
-          <div class="coming-chips">
-            <span>Historial completo</span><span>Estadísticas</span><span>Exportar PDF</span>
+
+        <!-- ── Encabezado institucional (solo al imprimir) ───── -->
+        <div class="rep-print-header rep-print-only">
+          <div class="rep-print-logo">🎓</div>
+          <div class="rep-print-titulo">
+            <h2>Reporte de Préstamos</h2>
+            <p>Facultad de Ingeniería Mochis — Universidad Autónoma de Sinaloa</p>
+            <small id="rep-print-fecha"></small>
           </div>
         </div>
+
+        <!-- ── Área de resultados ─────────────────────────────── -->
+        <div class="rep-resultados-area">
+          <div class="rep-resultados-header rep-screen-only">
+            <span class="rep-contador" id="rep-contador">Total de registros encontrados: 0</span>
+          </div>
+          <!-- Contador visible al imprimir -->
+          <div class="rep-print-contador rep-print-only">
+            <span id="rep-contador-print"></span>
+          </div>
+          <div id="rep-tabla-container"></div>
+        </div>
+
       </section>
 
     </main>
@@ -231,6 +303,30 @@
   <script src="js/database.js"></script>
   <script src="js/empleado.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/reportes.js"></script>
+  <script>
+    // Inicializar módulo Reportes al activar ese tab
+    (function patchCambiarTab() {
+      const _orig = window.cambiarTab;
+      window.cambiarTab = function(tabId, btnEl) {
+        _orig(tabId, btnEl);
+        if (tabId === 'reportes') {
+          Reportes.init();
+          const el = document.getElementById('rep-print-fecha');
+          if (el) el.textContent = 'Generado el ' + new Date().toLocaleString('es-MX', {
+            day: '2-digit', month: 'long', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', hour12: false
+          });
+          // Sincronizar contador con versión impresa
+          setTimeout(() => {
+            const cnt  = document.getElementById('rep-contador');
+            const cntP = document.getElementById('rep-contador-print');
+            if (cnt && cntP) cntP.textContent = cnt.textContent;
+          }, 80);
+        }
+      };
+    })();
+  </script>
 
 </body>
 </html>
