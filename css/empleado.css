@@ -719,3 +719,389 @@
     min-width: 700px;
   }
 }
+
+/* ============================================================
+   FASE 4 — Módulo de Administración (sub-tabs + CRUDs)
+   ============================================================ */
+
+/* ─── Barra de sub-tabs ───────────────────────────────────── */
+.adm-subtabs-bar {
+  display: flex;
+  gap: 0.4rem;
+  background: var(--blanco);
+  border: 1.5px solid var(--gris-claro);
+  border-radius: 12px;
+  padding: 0.4rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.adm-subtab {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--texto-medio);
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transicion);
+  white-space: nowrap;
+  text-align: center;
+}
+
+.adm-subtab:hover {
+  background: var(--off-white);
+  color: var(--azul-oscuro);
+}
+
+.adm-subtab.active {
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+  color: var(--blanco);
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(10, 36, 99, 0.2);
+}
+
+/* ─── Panel de sub-tab ────────────────────────────────────── */
+.adm-panel {
+  display: none;
+  animation: fadeIn 0.22s ease;
+}
+
+.adm-panel.active {
+  display: block;
+}
+
+.adm-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.adm-panel-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.adm-count {
+  font-size: 0.78rem;
+  color: var(--gris-medio);
+  background: var(--off-white);
+  border: 1px solid var(--gris-claro);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ─── Botón "Nuevo" ───────────────────────────────────────── */
+.btn-adm-nuevo {
+  padding: 0.55rem 1.1rem;
+  background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-medio));
+  color: var(--blanco);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicion);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-adm-nuevo:hover {
+  box-shadow: 0 4px 14px rgba(10, 36, 99, 0.28);
+  transform: translateY(-1px);
+}
+
+/* ─── Formulario inline ───────────────────────────────────── */
+.adm-form-card {
+  background: var(--blanco);
+  border: 1.5px solid var(--azul-claro);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 20px rgba(10, 36, 99, 0.08);
+  animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.adm-form-title {
+  font-family: var(--fuente-display);
+  font-size: 1rem;
+  color: var(--azul-oscuro);
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adm-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.9rem 1.2rem;
+  margin-bottom: 1.1rem;
+}
+
+.adm-form-grid.full {
+  grid-template-columns: 1fr;
+}
+
+.adm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.adm-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--texto-medio);
+  letter-spacing: 0.03em;
+}
+
+.adm-field input,
+.adm-field select {
+  padding: 0.55rem 0.8rem;
+  border: 1.5px solid var(--gris-claro);
+  border-radius: 7px;
+  font-family: var(--fuente-ui);
+  font-size: 0.84rem;
+  color: var(--texto-oscuro);
+  background: var(--off-white);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+  outline: none;
+}
+
+.adm-field input:focus,
+.adm-field select:focus {
+  border-color: var(--azul-medio);
+  box-shadow: 0 0 0 3px rgba(27, 79, 138, 0.12);
+  background: var(--blanco);
+}
+
+.adm-field input.error,
+.adm-field select.error {
+  border-color: var(--error);
+}
+
+.adm-field .field-error {
+  font-size: 0.7rem;
+  color: var(--error);
+  display: none;
+}
+
+.adm-field.has-error .field-error {
+  display: block;
+}
+
+.adm-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--gris-claro);
+}
+
+.btn-form-cancel {
+  padding: 0.5rem 1.1rem;
+  background: var(--off-white);
+  border: 1.5px solid var(--gris-claro);
+  color: var(--texto-medio);
+  border-radius: 7px;
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+
+.btn-form-cancel:hover { background: var(--gris-claro); }
+
+.btn-form-save {
+  padding: 0.5rem 1.3rem;
+  background: linear-gradient(135deg, var(--verde), #3aaa6e);
+  color: var(--blanco);
+  border: none;
+  border-radius: 7px;
+  font-family: var(--fuente-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+
+.btn-form-save:hover {
+  box-shadow: 0 4px 12px rgba(46, 139, 87, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ─── Tablas de CRUD ──────────────────────────────────────── */
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.crud-table thead {
+  background: var(--off-white);
+  border-bottom: 2px solid var(--gris-claro);
+}
+
+.crud-table thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--azul-oscuro);
+  white-space: nowrap;
+}
+
+.crud-table tbody tr {
+  border-bottom: 1px solid var(--gris-claro);
+  transition: background var(--transicion);
+}
+
+.crud-table tbody tr:last-child { border-bottom: none; }
+
+.crud-table tbody tr:hover { background: rgba(10, 36, 99, 0.025); }
+
+.crud-table tbody td {
+  padding: 0.8rem 1rem;
+  color: var(--texto-oscuro);
+  vertical-align: middle;
+}
+
+.crud-table tbody td.muted {
+  color: var(--gris-medio);
+  font-size: 0.76rem;
+}
+
+/* Chip de tipo de usuario */
+.user-tipo-chip {
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.user-tipo-chip--alumno   { background: rgba(27,79,138,0.1);  color: var(--azul-medio); }
+.user-tipo-chip--maestro  { background: rgba(46,139,87,0.1);  color: var(--verde); }
+.user-tipo-chip--empleado { background: rgba(201,168,76,0.15); color: #8a6a00; }
+
+/* Chip de estado de equipo */
+.equipo-estado-chip {
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.equipo-estado-chip--disponible    { background: rgba(46,139,87,0.1);  color: #1a6b3e; }
+.equipo-estado-chip--prestado      { background: rgba(229,62,62,0.1);  color: #9b1c1c; }
+.equipo-estado-chip--solicitado    { background: rgba(217,119,6,0.1);  color: #92400e; }
+.equipo-estado-chip--mantenimiento { background: rgba(138,149,168,0.12); color: #4a5568; }
+
+/* Acciones en tabla */
+.td-acciones {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.btn-tbl-edit {
+  padding: 0.35rem 0.75rem;
+  background: rgba(27,79,138,0.08);
+  color: var(--azul-medio);
+  border: 1px solid rgba(27,79,138,0.2);
+  border-radius: 6px;
+  font-family: var(--fuente-ui);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicion);
+  white-space: nowrap;
+}
+
+.btn-tbl-edit:hover {
+  background: var(--azul-medio);
+  color: var(--blanco);
+  border-color: var(--azul-medio);
+}
+
+.btn-tbl-del {
+  padding: 0.35rem 0.75rem;
+  background: rgba(229,62,62,0.08);
+  color: var(--error);
+  border: 1px solid rgba(229,62,62,0.2);
+  border-radius: 6px;
+  font-family: var(--fuente-ui);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicion);
+  white-space: nowrap;
+}
+
+.btn-tbl-del:hover {
+  background: var(--error);
+  color: var(--blanco);
+  border-color: var(--error);
+}
+
+.btn-tbl-del:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-tbl-del:disabled:hover {
+  background: rgba(229,62,62,0.08);
+  color: var(--error);
+  border-color: rgba(229,62,62,0.2);
+}
+
+/* ─── Alerta de advertencia en tabla ──────────────────────── */
+.adm-warn-inline {
+  font-size: 0.7rem;
+  color: #92400e;
+  background: rgba(217,119,6,0.1);
+  border: 1px solid rgba(217,119,6,0.25);
+  border-radius: 5px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .adm-subtabs-bar {
+    gap: 0.3rem;
+  }
+  .adm-subtab {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.6rem;
+    min-width: 80px;
+  }
+  .adm-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .tabla-wrapper { overflow-x: auto; }
+  .crud-table    { min-width: 560px; }
+}

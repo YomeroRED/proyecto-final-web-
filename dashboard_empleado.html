@@ -44,7 +44,7 @@
   ════════════════════════════════════════════════════════ -->
   <div class="emp-layout">
 
-    <!-- Sidebar / Nav lateral -->
+    <!-- Sidebar -->
     <aside class="emp-sidebar">
       <div class="emp-sidebar-user">
         <div class="emp-avatar" id="sidebar-avatar">A</div>
@@ -58,12 +58,12 @@
         <button class="emp-nav-item active" data-tab="pendientes" onclick="cambiarTab('pendientes', this)">
           <span class="emp-nav-icon">📋</span>
           <span class="emp-nav-label">Solicitudes</span>
-          <span class="emp-nav-badge" id="badge-pendientes">0</span>
+          <span class="emp-nav-badge" id="badge-pendientes"></span>
         </button>
         <button class="emp-nav-item" data-tab="bitacora" onclick="cambiarTab('bitacora', this)">
           <span class="emp-nav-icon">📖</span>
           <span class="emp-nav-label">Bitácora</span>
-          <span class="emp-nav-badge emp-nav-badge--blue" id="badge-activos">0</span>
+          <span class="emp-nav-badge emp-nav-badge--blue" id="badge-activos"></span>
         </button>
         <button class="emp-nav-item" data-tab="administracion" onclick="cambiarTab('administracion', this)">
           <span class="emp-nav-icon">⚙️</span>
@@ -91,14 +91,9 @@
             <h1 class="emp-section-title">Solicitudes Pendientes</h1>
             <p class="emp-section-subtitle">Bandeja de entrada — equipos en espera de entrega</p>
           </div>
-          <button class="btn-refresh" onclick="renderPendientes()" title="Actualizar">
-            <span id="refresh-icon-p">↻</span>
-          </button>
+          <button class="btn-refresh" onclick="renderPendientes()" title="Actualizar">↻</button>
         </div>
-
-        <div id="lista-pendientes">
-          <!-- Se renderiza con JS -->
-        </div>
+        <div id="lista-pendientes"></div>
       </section>
 
       <!-- ── TAB 2: Bitácora ───────────────────────────────── -->
@@ -108,14 +103,9 @@
             <h1 class="emp-section-title">Bitácora de Préstamos</h1>
             <p class="emp-section-subtitle">Equipos actualmente en préstamo — pendientes de devolución</p>
           </div>
-          <button class="btn-refresh" onclick="renderBitacora()" title="Actualizar">
-            <span>↻</span>
-          </button>
+          <button class="btn-refresh" onclick="renderBitacora()" title="Actualizar">↻</button>
         </div>
-
-        <div class="tabla-wrapper" id="wrapper-bitacora">
-          <!-- Se renderiza con JS -->
-        </div>
+        <div class="tabla-wrapper" id="wrapper-bitacora"></div>
       </section>
 
       <!-- ── TAB 3: Administración ─────────────────────────── -->
@@ -123,19 +113,74 @@
         <div class="emp-section-header">
           <div>
             <h1 class="emp-section-title">Administración</h1>
-            <p class="emp-section-subtitle">Gestión de usuarios, equipos y configuración del sistema</p>
+            <p class="emp-section-subtitle">Gestión de catálogos del sistema</p>
           </div>
         </div>
-        <div class="emp-coming-soon">
-          <div class="coming-icon">🛠️</div>
-          <h3>Módulo en desarrollo</h3>
-          <p>Aquí se implementarán los CRUDs de equipos, usuarios y configuración del sistema.</p>
-          <div class="coming-chips">
-            <span>CRUD Equipos</span>
-            <span>Gestión Usuarios</span>
-            <span>Categorías</span>
-          </div>
+
+        <!-- Sub-tabs de Administración -->
+        <div class="adm-subtabs-bar">
+          <button class="adm-subtab active" data-subtab="unidades"  onclick="cambiarSubTab('unidades', this)">
+            🏛️ Unidades
+          </button>
+          <button class="adm-subtab" data-subtab="carreras"  onclick="cambiarSubTab('carreras', this)">
+            🎓 Carreras
+          </button>
+          <button class="adm-subtab" data-subtab="usuarios"  onclick="cambiarSubTab('usuarios', this)">
+            👥 Usuarios
+          </button>
+          <button class="adm-subtab" data-subtab="equipos"   onclick="cambiarSubTab('equipos', this)">
+            💻 Equipos
+          </button>
         </div>
+
+        <!-- Sub-tab: Unidades -->
+        <div class="adm-panel active" id="admpanel-unidades">
+          <div class="adm-panel-header">
+            <div class="adm-panel-info">
+              <span class="adm-count" id="count-unidades">0 registros</span>
+            </div>
+            <button class="btn-adm-nuevo" onclick="abrirFormUnidad()">＋ Nueva Unidad</button>
+          </div>
+          <div id="form-unidad-container"></div>
+          <div class="tabla-wrapper" id="tabla-unidades"></div>
+        </div>
+
+        <!-- Sub-tab: Carreras -->
+        <div class="adm-panel" id="admpanel-carreras">
+          <div class="adm-panel-header">
+            <div class="adm-panel-info">
+              <span class="adm-count" id="count-carreras">0 registros</span>
+            </div>
+            <button class="btn-adm-nuevo" onclick="abrirFormCarrera()">＋ Nueva Carrera</button>
+          </div>
+          <div id="form-carrera-container"></div>
+          <div class="tabla-wrapper" id="tabla-carreras"></div>
+        </div>
+
+        <!-- Sub-tab: Usuarios -->
+        <div class="adm-panel" id="admpanel-usuarios">
+          <div class="adm-panel-header">
+            <div class="adm-panel-info">
+              <span class="adm-count" id="count-usuarios">0 registros</span>
+            </div>
+            <button class="btn-adm-nuevo" onclick="abrirFormUsuario()">＋ Nuevo Usuario</button>
+          </div>
+          <div id="form-usuario-container"></div>
+          <div class="tabla-wrapper" id="tabla-usuarios"></div>
+        </div>
+
+        <!-- Sub-tab: Equipos -->
+        <div class="adm-panel" id="admpanel-equipos">
+          <div class="adm-panel-header">
+            <div class="adm-panel-info">
+              <span class="adm-count" id="count-equipos">0 registros</span>
+            </div>
+            <button class="btn-adm-nuevo" onclick="abrirFormEquipo()">＋ Nuevo Equipo</button>
+          </div>
+          <div id="form-equipo-container"></div>
+          <div class="tabla-wrapper" id="tabla-equipos"></div>
+        </div>
+
       </section>
 
       <!-- ── TAB 4: Reportes ───────────────────────────────── -->
@@ -151,9 +196,7 @@
           <h3>Módulo en desarrollo</h3>
           <p>Aquí se mostrarán gráficas de uso, historial completo de préstamos y reportes exportables.</p>
           <div class="coming-chips">
-            <span>Historial completo</span>
-            <span>Estadísticas</span>
-            <span>Exportar PDF</span>
+            <span>Historial completo</span><span>Estadísticas</span><span>Exportar PDF</span>
           </div>
         </div>
       </section>
@@ -162,36 +205,32 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════════
-       MODAL DE CONFIRMACIÓN
+       MODAL GENÉRICO DE CONFIRMACIÓN
   ════════════════════════════════════════════════════════ -->
   <div class="modal-overlay" id="modal-overlay" onclick="cerrarModal()">
     <div class="modal-box" onclick="event.stopPropagation()">
-      <div class="modal-icon" id="modal-icon">⚠️</div>
-      <h3 class="modal-titulo" id="modal-titulo">¿Confirmar acción?</h3>
-      <p class="modal-texto" id="modal-texto">Esta acción no se puede deshacer.</p>
+      <div class="modal-icon"   id="modal-icon">⚠️</div>
+      <h3 class="modal-titulo"  id="modal-titulo">¿Confirmar acción?</h3>
+      <p  class="modal-texto"   id="modal-texto">Esta acción no se puede deshacer.</p>
       <div class="modal-btns">
-        <button class="modal-btn-cancel" onclick="cerrarModal()">Cancelar</button>
-        <button class="modal-btn-confirm" id="modal-confirm-btn" onclick="">Confirmar</button>
+        <button class="modal-btn-cancel"  onclick="cerrarModal()">Cancelar</button>
+        <button class="modal-btn-confirm" id="modal-confirm-btn">Confirmar</button>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       TOAST
-  ════════════════════════════════════════════════════════ -->
+  <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite">
-    <span class="toast-icon" id="toast-icon">✅</span>
+    <span class="toast-icon"  id="toast-icon">✅</span>
     <div class="toast-body">
       <div class="toast-title" id="toast-titulo">Acción completada</div>
-      <div class="toast-msg" id="toast-msg">—</div>
+      <div class="toast-msg"   id="toast-msg">—</div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       SCRIPTS
-  ════════════════════════════════════════════════════════ -->
   <script src="js/database.js"></script>
   <script src="js/empleado.js"></script>
+  <script src="js/admin.js"></script>
 
 </body>
 </html>
