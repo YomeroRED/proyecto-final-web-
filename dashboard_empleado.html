@@ -5,98 +5,193 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Empleado | UAS — Préstamo de Equipos</title>
 
-  <!-- Fuentes Google (preconnect completo, igual que index.html) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
 
-  <!-- Hojas de estilo -->
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/empleado.css" />
 </head>
 <body>
 
-  <!-- Barra superior -->
+  <!-- ═══════════════════════════════════════════════════════
+       TOPBAR
+  ════════════════════════════════════════════════════════ -->
   <nav class="topbar topbar--empleado">
     <div class="topbar-brand">
-      <div class="escudo">🎓</div>
-      <span>UAS · Sistema de Préstamo de Equipos</span>
+      <div class="escudo" aria-hidden="true">🎓</div>
+      <div>
+        <div style="font-size:0.88rem;font-weight:700;letter-spacing:0.02em;">
+          Facultad de Ingeniería Mochis
+        </div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.65);font-weight:400;">
+          UAS · Centro de Cómputo
+        </div>
+      </div>
     </div>
     <div class="topbar-right">
-      <div class="usuario-info">
-        <div class="nombre" id="nav-nombre">Cargando...</div>
-        <div class="tipo"   id="nav-tipo">—</div>
+      <div class="empleado-badge" id="nav-badge">
+        <span class="emp-dot"></span>
+        <span id="nav-nombre">Cargando...</span>
       </div>
       <button class="btn-salir" onclick="cerrarSesion()">Cerrar sesión</button>
     </div>
   </nav>
 
-  <!-- Contenido -->
-  <main class="main">
-    <div class="bienvenida">
-      <h1 id="msg-bienvenida">¡Bienvenido!</h1>
-      <p>Selecciona un módulo para gestionar el sistema de préstamo de equipos.</p>
-    </div>
+  <!-- ═══════════════════════════════════════════════════════
+       LAYOUT PRINCIPAL
+  ════════════════════════════════════════════════════════ -->
+  <div class="emp-layout">
 
-    <div class="modulos-grid">
-      <div class="modulo-card modulo-card--empleado">
-        <div class="icono">📋</div>
-        <h3>Nuevo Préstamo</h3>
-        <p>Registrar solicitud de equipo</p>
-        <span class="badge-fase2">Fase 2</span>
+    <!-- Sidebar / Nav lateral -->
+    <aside class="emp-sidebar">
+      <div class="emp-sidebar-user">
+        <div class="emp-avatar" id="sidebar-avatar">A</div>
+        <div>
+          <div class="emp-sidebar-name" id="sidebar-name">—</div>
+          <div class="emp-sidebar-role">Empleado · Control Escolar</div>
+        </div>
       </div>
-      <div class="modulo-card modulo-card--empleado">
-        <div class="icono">🔄</div>
-        <h3>Devoluciones</h3>
-        <p>Registrar equipo devuelto</p>
-        <span class="badge-fase2">Fase 2</span>
+
+      <nav class="emp-nav" role="navigation" aria-label="Módulos del sistema">
+        <button class="emp-nav-item active" data-tab="pendientes" onclick="cambiarTab('pendientes', this)">
+          <span class="emp-nav-icon">📋</span>
+          <span class="emp-nav-label">Solicitudes</span>
+          <span class="emp-nav-badge" id="badge-pendientes">0</span>
+        </button>
+        <button class="emp-nav-item" data-tab="bitacora" onclick="cambiarTab('bitacora', this)">
+          <span class="emp-nav-icon">📖</span>
+          <span class="emp-nav-label">Bitácora</span>
+          <span class="emp-nav-badge emp-nav-badge--blue" id="badge-activos">0</span>
+        </button>
+        <button class="emp-nav-item" data-tab="administracion" onclick="cambiarTab('administracion', this)">
+          <span class="emp-nav-icon">⚙️</span>
+          <span class="emp-nav-label">Administración</span>
+        </button>
+        <button class="emp-nav-item" data-tab="reportes" onclick="cambiarTab('reportes', this)">
+          <span class="emp-nav-icon">📊</span>
+          <span class="emp-nav-label">Reportes</span>
+        </button>
+      </nav>
+
+      <div class="emp-sidebar-footer">
+        <div class="emp-clock" id="reloj">--:--:--</div>
+        <div class="emp-fecha" id="fecha-hoy">—</div>
       </div>
-      <div class="modulo-card modulo-card--empleado">
-        <div class="icono">💻</div>
-        <h3>Inventario</h3>
-        <p>Gestionar catálogo de equipos</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
-      <div class="modulo-card modulo-card--empleado">
-        <div class="icono">📊</div>
-        <h3>Reportes</h3>
-        <p>Historial y estadísticas</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
-      <div class="modulo-card modulo-card--empleado">
-        <div class="icono">👥</div>
-        <h3>Usuarios</h3>
-        <p>Administrar cuentas</p>
-        <span class="badge-fase2">Fase 2</span>
-      </div>
-      <div class="modulo-card modulo-card--empleado">
-        <div class="icono">⚙️</div>
-        <h3>Configuración</h3>
-        <p>Ajustes del sistema</p>
-        <span class="badge-fase2">Fase 2</span>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="emp-main" id="emp-main">
+
+      <!-- ── TAB 1: Solicitudes Pendientes ─────────────────── -->
+      <section class="emp-tab active" id="tab-pendientes">
+        <div class="emp-section-header">
+          <div>
+            <h1 class="emp-section-title">Solicitudes Pendientes</h1>
+            <p class="emp-section-subtitle">Bandeja de entrada — equipos en espera de entrega</p>
+          </div>
+          <button class="btn-refresh" onclick="renderPendientes()" title="Actualizar">
+            <span id="refresh-icon-p">↻</span>
+          </button>
+        </div>
+
+        <div id="lista-pendientes">
+          <!-- Se renderiza con JS -->
+        </div>
+      </section>
+
+      <!-- ── TAB 2: Bitácora ───────────────────────────────── -->
+      <section class="emp-tab" id="tab-bitacora">
+        <div class="emp-section-header">
+          <div>
+            <h1 class="emp-section-title">Bitácora de Préstamos</h1>
+            <p class="emp-section-subtitle">Equipos actualmente en préstamo — pendientes de devolución</p>
+          </div>
+          <button class="btn-refresh" onclick="renderBitacora()" title="Actualizar">
+            <span>↻</span>
+          </button>
+        </div>
+
+        <div class="tabla-wrapper" id="wrapper-bitacora">
+          <!-- Se renderiza con JS -->
+        </div>
+      </section>
+
+      <!-- ── TAB 3: Administración ─────────────────────────── -->
+      <section class="emp-tab" id="tab-administracion">
+        <div class="emp-section-header">
+          <div>
+            <h1 class="emp-section-title">Administración</h1>
+            <p class="emp-section-subtitle">Gestión de usuarios, equipos y configuración del sistema</p>
+          </div>
+        </div>
+        <div class="emp-coming-soon">
+          <div class="coming-icon">🛠️</div>
+          <h3>Módulo en desarrollo</h3>
+          <p>Aquí se implementarán los CRUDs de equipos, usuarios y configuración del sistema.</p>
+          <div class="coming-chips">
+            <span>CRUD Equipos</span>
+            <span>Gestión Usuarios</span>
+            <span>Categorías</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TAB 4: Reportes ───────────────────────────────── -->
+      <section class="emp-tab" id="tab-reportes">
+        <div class="emp-section-header">
+          <div>
+            <h1 class="emp-section-title">Reportes</h1>
+            <p class="emp-section-subtitle">Estadísticas, historial y reportes del sistema</p>
+          </div>
+        </div>
+        <div class="emp-coming-soon">
+          <div class="coming-icon">📈</div>
+          <h3>Módulo en desarrollo</h3>
+          <p>Aquí se mostrarán gráficas de uso, historial completo de préstamos y reportes exportables.</p>
+          <div class="coming-chips">
+            <span>Historial completo</span>
+            <span>Estadísticas</span>
+            <span>Exportar PDF</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MODAL DE CONFIRMACIÓN
+  ════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-overlay" onclick="cerrarModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-icon" id="modal-icon">⚠️</div>
+      <h3 class="modal-titulo" id="modal-titulo">¿Confirmar acción?</h3>
+      <p class="modal-texto" id="modal-texto">Esta acción no se puede deshacer.</p>
+      <div class="modal-btns">
+        <button class="modal-btn-cancel" onclick="cerrarModal()">Cancelar</button>
+        <button class="modal-btn-confirm" id="modal-confirm-btn" onclick="">Confirmar</button>
       </div>
     </div>
-  </main>
+  </div>
 
+  <!-- ═══════════════════════════════════════════════════════
+       TOAST
+  ════════════════════════════════════════════════════════ -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon" id="toast-icon">✅</span>
+    <div class="toast-body">
+      <div class="toast-title" id="toast-titulo">Acción completada</div>
+      <div class="toast-msg" id="toast-msg">—</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════════════════════ -->
   <script src="js/database.js"></script>
-  <script>
-    (function() {
-      const sesion = JSON.parse(sessionStorage.getItem('uas_session') || 'null');
-      if (!sesion || sesion.tipo !== 'Empleado') {
-        window.location.href = 'index.html';
-        return;
-      }
-      document.getElementById('nav-nombre').textContent = sesion.nombre;
-      document.getElementById('nav-tipo').textContent   = `${sesion.tipo} · ${sesion.unidad || 'UAS'}`;
-      document.getElementById('msg-bienvenida').textContent =
-        `¡Bienvenido, ${sesion.nombre.split(' ')[0]}!`;
-    })();
-
-    function cerrarSesion() {
-      sessionStorage.removeItem('uas_session');
-      window.location.href = 'index.html';
-    }
-  </script>
+  <script src="js/empleado.js"></script>
 
 </body>
 </html>
