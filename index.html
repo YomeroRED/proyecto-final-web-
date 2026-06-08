@@ -1,166 +1,204 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Sistema de Préstamo de Equipos — Facultad de Ingeniería Mochis, UAS" />
-  <title>Acceso al Sistema | UAS — Préstamo de Equipos</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sistema de Préstamo de Equipos — Facultad de Ingeniería Mochis, UAS"
+    />
+    <title>Acceso al Sistema | UAS — Préstamo de Equipos</title>
 
-  <!-- Fuentes Google (cargadas aquí una sola vez; eliminado el @import duplicado en CSS) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <!-- Fuentes Google (cargadas aquí una sola vez; eliminado el @import duplicado en CSS) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Hojas de estilo -->
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/login.css" />
-</head>
-<body>
-
-  <!-- ════════════════════════════════════════════════════════
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
+    <!-- ════════════════════════════════════════════════════════
        TARJETA DE LOGIN
   ═════════════════════════════════════════════════════════ -->
-  <div class="login-card" role="main" aria-label="Formulario de inicio de sesión">
-
-    <!-- ── Cabecera institucional ──────────────────────────── -->
-    <header class="card-header">
-      <div class="logo-wrapper">
-        <div class="logo-escudo" role="img" aria-label="Escudo UAS">🎓</div>
-        <div class="logo-text">
-          <span class="universidad">Universidad Autónoma de Sinaloa</span>
-          <span class="facultad">Facultad de Ingeniería Mochis</span>
+    <div
+      class="login-card"
+      role="main"
+      aria-label="Formulario de inicio de sesión"
+    >
+      <!-- ── Cabecera institucional ──────────────────────────── -->
+      <header class="card-header">
+        <div class="logo-wrapper">
+          <div class="logo-escudo" role="img" aria-label="Escudo UAS">🎓</div>
+          <div class="logo-text">
+            <span class="universidad">Universidad Autónoma de Sinaloa</span>
+            <span class="facultad">Facultad de Ingeniería Mochis</span>
+          </div>
         </div>
-      </div>
-      <h1>Centro de Cómputo</h1>
-      <p>Sistema de Préstamo de Equipos</p>
-    </header>
+        <h1>Centro de control</h1>
+        <p>Sistema de Préstamo de Equipos</p>
+      </header>
 
-    <!-- ── Cuerpo del formulario ───────────────────────────── -->
-    <div class="card-body">
-
-      <!-- Toggle de rol -->
-      <div class="rol-switcher" role="group" aria-label="Seleccionar rol de acceso">
-        <button
-          id="toggle-empleado"
-          class="rol-btn active"
-          type="button"
-          aria-pressed="true"
-          title="Acceder como Empleado">
-          <span class="icono" aria-hidden="true">🏢</span>
-          Empleado
-        </button>
-        <button
-          id="toggle-alumno"
-          class="rol-btn"
-          type="button"
-          aria-pressed="false"
-          title="Acceder como Alumno o Maestro">
-          <span class="icono" aria-hidden="true">🎒</span>
-          Alumno / Maestro
-        </button>
-      </div>
-
-      <!-- Campo: Usuario / Matrícula -->
-      <div class="campo-grupo">
-        <label for="input-usuario" id="label-usuario">Usuario</label>
-        <div class="input-wrapper">
-          <span class="input-icono" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-          </span>
-          <input
-            type="text"
-            id="input-usuario"
-            name="usuario"
-            placeholder="Ej. admin o mlopez"
-            autocomplete="username"
-            spellcheck="false"
-            autocapitalize="none"
-            aria-required="true"
-            aria-describedby="error-msg" />
-        </div>
-      </div>
-
-      <!-- Campo: Contraseña -->
-      <div class="campo-grupo">
-        <label for="input-password">Contraseña</label>
-        <div class="input-wrapper">
-          <span class="input-icono" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
-          </span>
-          <input
-            type="password"
-            id="input-password"
-            name="password"
-            placeholder="Tu contraseña"
-            class="has-right-icon"
-            autocomplete="current-password"
-            aria-required="true"
-            aria-describedby="error-msg" />
+      <!-- ── Cuerpo del formulario ───────────────────────────── -->
+      <div class="card-body">
+        <!-- Toggle de rol -->
+        <div
+          class="rol-switcher"
+          role="group"
+          aria-label="Seleccionar rol de acceso"
+        >
           <button
+            id="toggle-empleado"
+            class="rol-btn active"
             type="button"
-            id="btn-show-pass"
-            class="btn-show-pass"
-            aria-label="Mostrar contraseña"
-            title="Mostrar / ocultar contraseña">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
+            aria-pressed="true"
+            title="Acceder como Empleado"
+          >
+            <span class="icono" aria-hidden="true">🏢</span>
+            Empleado
+          </button>
+          <button
+            id="toggle-alumno"
+            class="rol-btn"
+            type="button"
+            aria-pressed="false"
+            title="Acceder como Alumno o Maestro"
+          >
+            <span class="icono" aria-hidden="true">🎒</span>
+            Alumno / Maestro
           </button>
         </div>
+
+        <!-- Campo: Usuario / Matrícula -->
+        <div class="campo-grupo">
+          <label for="input-usuario" id="label-usuario">Usuario</label>
+          <div class="input-wrapper">
+            <span class="input-icono" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="input-usuario"
+              name="usuario"
+              placeholder="Ej. admin o mlopez"
+              autocomplete="username"
+              spellcheck="false"
+              autocapitalize="none"
+              aria-required="true"
+              aria-describedby="error-msg"
+            />
+          </div>
+        </div>
+
+        <!-- Campo: Contraseña -->
+        <div class="campo-grupo">
+          <label for="input-password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icono" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </span>
+            <input
+              type="password"
+              id="input-password"
+              name="password"
+              placeholder="Tu contraseña"
+              class="has-right-icon"
+              autocomplete="current-password"
+              aria-required="true"
+              aria-describedby="error-msg"
+            />
+            <button
+              type="button"
+              id="btn-show-pass"
+              class="btn-show-pass"
+              aria-label="Mostrar contraseña"
+              title="Mostrar / ocultar contraseña"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div
+          id="error-msg"
+          class="error-msg"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        ></div>
+
+        <!-- Botón de acceso -->
+        <button
+          type="button"
+          id="btn-login"
+          class="btn-login"
+          aria-label="Iniciar sesión"
+        >
+          <span id="login-spinner" class="spinner" aria-hidden="true"></span>
+          <span class="btn-text">Ingresar al Sistema</span>
+        </button>
       </div>
+      <!-- /card-body -->
 
-      <!-- Mensaje de error -->
-      <div
-        id="error-msg"
-        class="error-msg"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true">
-      </div>
-
-      <!-- Botón de acceso -->
-      <button
-        type="button"
-        id="btn-login"
-        class="btn-login"
-        aria-label="Iniciar sesión">
-        <span id="login-spinner" class="spinner" aria-hidden="true"></span>
-        <span class="btn-text">Ingresar al Sistema</span>
-      </button>
-
-    </div><!-- /card-body -->
-
-    <!-- ── Pie con credenciales demo ─────────────────────── -->
-    <footer class="card-footer">
-      <p>Acceso exclusivo para personal y estudiantes de la <strong>UAS</strong>.</p>
-
-      <!-- ⚠️ Eliminar este bloque en producción ⚠️ -->
-      <div class="demo-info" aria-label="Credenciales de demostración">
+      <!-- ── Pie con credenciales demo ─────────────────────── -->
+      <footer class="card-footer">
         <p>
-          <strong>Demo — Empleado:</strong> admin / <em>admin123</em><br/>
-          <strong>Demo — Alumno:</strong> 2021080001 / <em>alumno123</em><br/>
-          <strong>Demo — Maestro:</strong> rinzunza / <em>maestro123</em>
+          Acceso exclusivo para personal y estudiantes de la
+          <strong>UAS</strong>.
         </p>
-      </div>
-    </footer>
 
-  </div><!-- /login-card -->
+        <!-- ⚠️ Eliminar este bloque en producción ⚠️ -->
+        <div class="demo-info" aria-label="Credenciales de demostración">
+          <p>
+            <strong>Demo — Empleado:</strong> admin / <em>admin123</em><br />
+            <strong>Demo — Alumno:</strong> 2021080001 / <em>alumno123</em
+            ><br />
+            <strong>Demo — Maestro:</strong> rinzunza / <em>maestro123</em>
+          </p>
+        </div>
+      </footer>
+    </div>
+    <!-- /login-card -->
 
-  <script src="js/database.js"></script>
-  <script src="js/auth.js"></script>
-
-</body>
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
 </html>
